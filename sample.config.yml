@@ -1,0 +1,8 @@
+---
+profiles:
+  username:
+    username: MyTwitterAccount
+    consumer_key: getme
+    consumer_secret: getme
+    token: getme
+    secret: getme
