@@ -21,8 +21,7 @@ class MyCLI < Thor
 
     # setup client and add members to list
     client = @@config.get_profile_client(profile)
-    list = client.list('main')
-    list_id = list.id
+    list = client.list(listname)
     members.each do |member|
       catch_twitter {
         if (!client.list_member?(profile,listname,member))
@@ -35,6 +34,14 @@ class MyCLI < Thor
         sleep(10)
       }
     end
+  end
+
+  desc "add PROFILE LISTNAME MEMBER", "immediately add MEMBER (no @ symbol) to LISTNAME for PROFILE"
+  def add(profile,listname,member)
+    puts "Adding #{member} to @#{profile}/#{listname}..."
+    client = @@config.get_profile_client(profile)
+    client.add_list_member(listname,member)
+    puts "... DONE!"
   end
 end
 
