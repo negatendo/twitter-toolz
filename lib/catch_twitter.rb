@@ -22,9 +22,10 @@ def catch_twitter
       puts "ERR: Timeout?\n\t#{error}\nSleeping for #{timeout_sleep} seconds..."
       sleep timeout_sleep
       retry
+    elsif error.class == Twitter::Error::NotFound
     else
-      puts "Unhandled exception from Twitter: #{error.to_s}"
-      raise
+      puts "Status does not exist but continuing"
+      return true
     end
   end
 end
