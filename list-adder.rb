@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# operate on a text file of followers adding them to a list
+# a few operations for lists
 
 require 'thor'
 require_relative 'lib/configloader'
