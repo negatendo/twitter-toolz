@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
-<-DOC
-a few operations for lists:
-import - import a list of twitter account names from a .txt file to a list
-add - add someone to a list
-DOC
+##
+# a few operations for lists:
+# import - import a list of twitter account names from a .txt file to a list
+# add - add someone to a list
+#
 
 require 'thor'
 require_relative 'lib/configloader'
