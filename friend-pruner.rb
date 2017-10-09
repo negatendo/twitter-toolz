@@ -55,7 +55,8 @@ class MyCLI < Thor
           @this_friend = client.user(friend)
           sleep(3)
         }
-        puts Paint["-= @#{@this_friend.name} =-", :red]
+        puts Paint["-= #{@this_friend.name} =-", :red]
+        puts "#{@this_friend.uri}"
         puts Paint["#{@this_friend.description}", :blue]
         if (@this_friend.website?)
           puts Paint["#{@this_friend.website}", :green]
