@@ -2,7 +2,7 @@ require 'yaml'
 require 'twitter'
 
 class ConfigLoader
-  #profile config loading class with handy tools and such
+  # loads and acts on config.yml file
   def initialize(path)
     begin
       @config = YAML.load_file(path)
@@ -12,7 +12,7 @@ class ConfigLoader
     end
   end
   def get_all_profiles
-    #returns all profile names
+    # returns all profile names
     profiles =[]
     @config['profiles'].each do |profile|
       profiles << profile.first
@@ -20,7 +20,7 @@ class ConfigLoader
     return profiles
   end
   def get_profile(profilename)
-    #returns profile config
+    # returns profile config
     profile = @config['profiles'][profilename]
     if profile
       return profile
@@ -30,7 +30,7 @@ class ConfigLoader
     end
   end
   def get_profile_client(profilename)
-    #returns a client connected to profile
+    # returns a client connected to profile
     profile = get_profile(profilename)
     client = Twitter::REST::Client.new do |config|
       config.consumer_key        = profile['consumer_key']
@@ -41,7 +41,7 @@ class ConfigLoader
     return client
   end
   def get_config_value(profilename,key)
-    #return value for just one config var
+    # return value for just one config var
     return @config['profiles'][profilename][key]
   end
 end
