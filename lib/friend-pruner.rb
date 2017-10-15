@@ -6,15 +6,16 @@
 
 require 'thor'
 require 'highline/import'
-require 'paint'
-require_relative 'lib/configloader'
-require_relative 'lib/catch_twitter'
+HighLine.color_scheme = HighLine::SampleColorScheme.new
 
-class MyCLI < Thor
+require_relative 'configloader'
+require_relative 'catch_twitter'
+
+class FriendPruner < MyCLI
   #path to config.yml with bot auth info:
   @@config = ConfigLoader.new('config.yml')
 
-  desc "prune PROFILE", "iterate through all friends of PROFILE and give info and option to unfollow. if --listname=LISTNAME is provided, members of provided list will be ignored in process, and you will be given the option to add those you don't unfollow to that list"
+  desc "prune PROFILE", "iterate through all friends of PROFILE and give info and option to unfollow. if --listname=LISTNAME is provided, members of provided list will be ignored in process, and you will be given the option to add those you don't unfollow to that list. if --brief=true is provided fewer information lookups will be performed and less info per person shown."
   option :listname, :required => false
   def prune(profile)
     # get our client
@@ -65,7 +66,7 @@ class MyCLI < Thor
         # last 20 tweets
         catch_twitter {
           client.user_timeline(friend).each do |tweet|
-            puts Paint["-- #{tweet.text}", "#CCCCCC"]
+            puts Paint["#{tweet.created_at} - #{tweet.text}", "#CCCCCC"]
           end
         }
 

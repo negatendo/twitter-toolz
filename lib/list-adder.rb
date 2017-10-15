@@ -6,6 +6,9 @@
 #
 
 require 'thor'
+require 'highline/import'
+HighLine.color_scheme = HighLine::SampleColorScheme.new
+
 require_relative 'lib/configloader'
 require_relative 'lib/catch_twitter'
 

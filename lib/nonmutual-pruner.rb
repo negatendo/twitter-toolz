@@ -4,10 +4,10 @@
 #
 
 require 'thor'
-require 'highline/import'
-require 'paint'
+
 require_relative 'lib/configloader'
 require_relative 'lib/catch_twitter'
+require_relative 'lib/colorscheme'
 
 class MyCLI < Thor
   #path to config.yml with bot auth info:

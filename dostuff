@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+##
+# wrapper for scripts found in lib/
+#
+require_relative 'lib/mycli'

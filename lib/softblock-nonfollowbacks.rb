@@ -5,7 +5,8 @@
 
 require 'thor'
 require 'highline/import'
-require 'paint'
+HighLine.color_scheme = HighLine::SampleColorScheme.new
+
 require_relative 'lib/configloader'
 require_relative 'lib/catch_twitter'
 
@@ -13,8 +14,17 @@ class MyCLI < Thor
   #path to config.yml with bot auth info:
   @@config = ConfigLoader.new('config.yml')
 
-  desc "softprune PROFILE", "iterate through accounts following the profile and softblock (block then unblock - e.g. force the unfollow of) the nonmutuals. supply --noprompt=true to skip confirmation on each."
+  desc "softprune <profile>", "go through <profile> and then softblock (block then unblock, e.g. force the unfollow-of) nonmutuals."
+  long_desc <<-LONGDESC
+    sofprune:
+
+    Go through accounts following the <profile> and softblock (block then unblock - e.g. force the unfollow of) nonmutuals.
+
+    --noprompt=true to skip confirmation on each
+    \x5-testrun=true to run the script without performing softblocks
+  LONGDESC
   option :noprompt, :default => false
+  option :testrun, :default => false
   def softprune(profile)
     # get our client
     client = @@config.get_profile_client(profile)

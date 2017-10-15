@@ -7,7 +7,7 @@ class ConfigLoader
     begin
       @config = YAML.load_file(path)
     rescue
-      puts "Could not load config.yml"
+      raise "Could not load config.yml"
       exit
     end
   end
@@ -25,8 +25,7 @@ class ConfigLoader
     if profile
       return profile
     else
-      puts "Could not find configuration info for a profile called " + profilename
-      exit
+      raise "Could not find configuration info for a profile called " + profilename
     end
   end
   def get_profile_client(profilename)
