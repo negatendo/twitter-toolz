@@ -5,7 +5,7 @@ def catch_twitter
   # custom error catching for twitter gem
   # inspired by https://github.com/BooDoo/ebooks_example/blob/master/boodoo.rb
   max_error_retries = 3
-  timeout_sleep = 3
+  timeout_sleep = 10
   retries = 0
   output = HighLine.new
   begin
