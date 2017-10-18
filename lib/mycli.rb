@@ -10,7 +10,7 @@ require_relative 'catch_twitter'
 require_relative 'delete-tweets'
 #require_relative 'friend-pruner'
 #require_relative 'list-adder'
-#require_relative 'nonmutual-pruner'
+require_relative 'nonmutual-pruner'
 #require_relative 'softblock-nonfollowbacks'
 
 # configure base cli interface and highline output
@@ -39,9 +39,16 @@ class MyCLI < Thor
     DeleteTweets.new(@@output,client,options).csvdelete(path)
   end
 
+  ##
+  # nonmutual-prunter
+  #
+  desc "prune PROFILE", "iterate through nonmutual followers and unfollow. supply --noprompt=true to skip confirmation on each."
+  option :noprompt, :default => false
+  def prune(profile)
+    client = @@config.get_profile_client(profile)
+    NonmutualPruner.new(@@output,client,options).prune(profile)
+  end
 end
-
-
 
 MyCLI.start(ARGV)
 

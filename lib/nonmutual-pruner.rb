@@ -3,50 +3,46 @@
 # iterate through your nonmutuals and unfollow
 #
 
-require 'thor'
-
-require_relative 'lib/configloader'
-require_relative 'lib/catch_twitter'
-require_relative 'lib/colorscheme'
-
-class MyCLI < Thor
-  #path to config.yml with bot auth info:
-  @@config = ConfigLoader.new('config.yml')
-
-  desc "prune PROFILE", "iterate through nonmutual followers and unfollow. supply --noprompt=true to skip confirmation on each."
-  option :noprompt, :default => false
+class NonmutualPruner
+  @output = false
+  @client = false
+  @options = []
+  def initialize(output,client,options)
+    # send highline obj and a twitter client
+    @output = output
+    @client = client
+    @options = options
+  end
   def prune(profile)
-    # get our client
-    client = @@config.get_profile_client(profile)
     # gather all friends - this takes a while
     friends = []
-    puts "Loading friends... this might take a while."
+    say("Loading friends... this might take a while.")
     catch_twitter {
-      client.friend_ids(profile).each_slice(50).with_index do |slice, i|
-        client.users(slice).each_with_index do |f, j|
+      @client.friend_ids(profile).each_slice(50).with_index do |slice, i|
+        @client.users(slice).each_with_index do |f, j|
           friends << f.screen_name
         end
       end
     }
     # go through them and if nonmutual then remove
     friends.each do |friend|
-      puts Paint["Loading next friend @#{friend}...", :bright]
+      @output.say("Loading next friend @#{friend}...")
       # show if they are a mutual
       @is_follower = false;
       catch_twitter {
-        @is_follower = client.friendship?(friend,profile)
+        @is_follower = @client.friendship?(friend,profile)
       }
       skip = false
       if (@is_follower)
-        puts Paint["+ Follows You Back", :green]
+        say("<%= color('+ Follows Back', [:bold, :red]) %>")
         skip = true
       else
-        puts Paint["- Does Not Follow You Back", :red]
+        say("<%= color('- Does Not Follow Back', [:bold, :green]) %>")
       end
       if (!skip)
         # prompts
         unfollow = false
-        if (options[:noprompt])
+        if (@options[:noprompt])
           unfollow = true
         else
           if (agree("Unfollow them?"))
@@ -54,16 +50,14 @@ class MyCLI < Thor
           end
         end
         if (unfollow)
-          puts "Unfollowing..."
+          say("Unfollowing...")
           catch_twitter {
-            client.unfollow(friend)
+            @client.unfollow(friend)
           }
-          puts Paint["... UNFOLLOWED!", :green, :bright]
+          say("<%= color('... unfollowed!', :info) %>")
         end
       end
     end
   end
 end
-
-MyCLI.start(ARGV);
 
