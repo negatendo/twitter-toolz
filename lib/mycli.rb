@@ -11,7 +11,7 @@ require_relative 'catch_twitter'
 require_relative 'delete_tweets'
 require_relative 'nonmutual_pruner'
 require_relative 'friend_pruner'
-#require_relative 'softblock_nonfollowbacks'
+require_relative 'softblock_nonfollowbacks'
 #require_relative 'list_adder'
 
 
@@ -60,6 +60,25 @@ class MyCLI < Thor
   def processfriends(profile)
     client = @@config.get_profile_client(profile)
     FriendPruner.new(@@output,client,options).prune(profile)
+  end
+
+  ##
+  # softprune from softblock_nonfollowbacks
+  #
+  desc "softprune <profile>", "go through <profile> and then softblock (block then unblock, e.g. force the unfollow-of) nonmutuals."
+  long_desc <<-LONGDESC
+    sofprune:
+
+    Go through accounts following the <profile> and softblock (block then unblock - e.g. force the unfollow of) nonmutuals.
+
+    --noprompt=true to skip confirmation on each
+    \x5-testrun=true to run the script without performing softblocks
+  LONGDESC
+  option :noprompt, :default => false
+  option :testrun, :default => false
+  def softprune(profile)
+    client = @@config.get_profile_client(profile)
+    SoftPrune.new(@@output,client,options).softprune(profile)
   end
 end
 
