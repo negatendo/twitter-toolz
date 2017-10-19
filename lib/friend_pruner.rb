@@ -44,6 +44,7 @@ class FriendPruner < MyCLIPart
         }
         @output.say("<%= color('-= #{@this_friend.name} =-', :red) %>")
         @output.say("<%= color('-= #{@this_friend.uri} =-', :white) %>")
+        #FIXME regx breaking escaping idk it's weird try with apostrophe
         #desc = "<%= color('-= #{@this_friend.description} =-', :blue) %>";
         #@output.say(desc)
         if (@this_friend.website?)
