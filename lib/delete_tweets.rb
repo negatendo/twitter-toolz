@@ -3,16 +3,7 @@
 # iterate through your tweets and delete them alllllll
 #
 
-class DeleteTweets
-  @output = false
-  @client = false
-  @options = []
-  def initialize(output,client,options)
-    # send highline obj and a twitter client
-    @output = output
-    @client = client
-    @options = options
-  end
+class DeleteTweets < MyCLIPart
   def csvdelete(path)
     # collect tweet ids from csv         h
     rownum = 0

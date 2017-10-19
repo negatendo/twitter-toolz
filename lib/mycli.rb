@@ -3,15 +3,17 @@ require 'highline/import'
 
 require 'csv'
 
+require_relative 'mycli_part'
 require_relative 'configloader'
 require_relative 'catch_twitter'
 
-# each of these bring in a class used by commands
-require_relative 'delete-tweets'
-#require_relative 'friend-pruner'
-#require_relative 'list-adder'
-require_relative 'nonmutual-pruner'
-#require_relative 'softblock-nonfollowbacks'
+# each of these bring in a class used by commands - idk its ugly
+require_relative 'delete_tweets'
+require_relative 'nonmutual_pruner'
+require_relative 'friend_pruner'
+#require_relative 'softblock_nonfollowbacks'
+#require_relative 'list_adder'
+
 
 # configure base cli interface and highline output
 class MyCLI < Thor
@@ -22,7 +24,7 @@ class MyCLI < Thor
   @@output = HighLine.new
 
   ##
-  # delete-tweets
+  # cvsdelete from delete-tweets
   #
   desc "csvdelete <profile> <path>", "iterate through a twitter archive's .csv file for <profile> at <path> and delete all tweets."
   long_desc <<-LONGDESC
@@ -40,15 +42,27 @@ class MyCLI < Thor
   end
 
   ##
-  # nonmutual-prunter
+  # prunenonmutuals from nonmutual-pruner
   #
-  desc "prune PROFILE", "iterate through nonmutual followers and unfollow. supply --noprompt=true to skip confirmation on each."
+  desc "prunenonmutuals PROFILE", "iterate through nonmutual followers and unfollow. supply --noprompt=true to skip confirmation on each."
   option :noprompt, :default => false
-  def prune(profile)
+  def prunenonmutuals(profile)
     client = @@config.get_profile_client(profile)
     NonmutualPruner.new(@@output,client,options).prune(profile)
   end
+
+  ##
+  # processfriends from friend-pruner
+  #
+   desc "processfriends PROFILE", "iterate through all friends of PROFILE, give information about each, and give the option to unfollow. if --listname=LISTNAME is provided, members of provided list will be ignored in process, and you will be given the option to add those you choose not to unfollow to that list. if --brief=true is provided, less information lookups will be performed and less info per person shown (such as their last 20 tweets)."
+  option :listname, :required => false
+  option :brief,    :required => false
+  def processfriends(profile)
+    client = @@config.get_profile_client(profile)
+    FriendPruner.new(@@output,client,options).prune(profile)
+  end
 end
+
 
 MyCLI.start(ARGV)
 

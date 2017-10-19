@@ -3,16 +3,7 @@
 # iterate through your nonmutuals and unfollow
 #
 
-class NonmutualPruner
-  @output = false
-  @client = false
-  @options = []
-  def initialize(output,client,options)
-    # send highline obj and a twitter client
-    @output = output
-    @client = client
-    @options = options
-  end
+class NonmutualPruner < MyCLIPart
   def prune(profile)
     # gather all friends - this takes a while
     friends = []
