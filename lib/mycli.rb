@@ -12,7 +12,7 @@ require_relative 'delete_tweets'
 require_relative 'nonmutual_pruner'
 require_relative 'friend_pruner'
 require_relative 'softblock_nonfollowbacks'
-#require_relative 'list_adder'
+require_relative 'list_adder'
 
 
 # configure base cli interface and highline output
@@ -79,6 +79,24 @@ class MyCLI < Thor
   def softprune(profile)
     client = @@config.get_profile_client(profile)
     SoftPrune.new(@@output,client,options).softprune(profile)
+  end
+
+  ##
+  # importlist from list_adder
+  #
+  desc "importlist PROFILE FILE LISTNAME", "import list for PROFILE from txt file at PATH into LISTNNAME"
+  def importlist(profile,path,listname)
+    client = @@config.get_profile_client(profile)
+    ListAdder.new(@@output,client,options).import(profile,path,listname)
+  end
+
+  ##
+  # addtolist from list_adder
+  #
+  desc "addtolist PROFILE LISTNAME MEMBER", "immediately add MEMBER (no @ symbol) to LISTNAME for PROFILE"
+  def addtolist(profile,listname,member)
+    client = @@config.get_profile_client(profile)
+    ListAdder.new(@@output,client,options).add(profile,listname,member)
   end
 end
 
