@@ -25,18 +25,18 @@ class DeleteTweets < MyCLIPart
         if (@options[:noprompt])
           do_delete = true
         else
-          if agree("<%= color('Delete this Tweet? #{tweet.url}', :bold) %>")
+          if agree("Delete this Tweet? #{tweet.url}")
             do_delete = true
           end
         end
         if (do_delete)
-          @output.say("<%= color('Deleting #{tweet.url}', :notice) %>")
+          @output.say("Deleting #{tweet.url}")
           catch_twitter {
             if (!@options[:testrun])
               @client.destroy_status(id)
-              say("<%= color('... Tweet deleted!', :info) %>")
+              say("... Tweet deleted!")
             else
-              say("<%= color('DEBUG: The Tweet was not deleted because --testrun=true', :debug) %>")
+              say("DEBUG: The Tweet was not deleted because --testrun=true")
             end
           }
         end

@@ -19,8 +19,6 @@ require_relative 'list_adder'
 class MyCLI < Thor
   #path to config.yml with bot auth info:
   @@config = ConfigLoader.new('config.yml')
-  # TODO cool color scheme? lol nah
-  HighLine.color_scheme = HighLine::SampleColorScheme.new
   @@output = HighLine.new
 
   ##

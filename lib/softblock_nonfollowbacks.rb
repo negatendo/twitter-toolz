@@ -25,10 +25,10 @@ class SoftPrune < MyCLIPart
       }
       skip = false
       if (@is_friend)
-        say("<%= color('+ You Follow Them',:green) %>")
+        say("+ You Follow Them")
         skip = true
       else
-        say("<%= color('- You Do NOt Follow Them',:red) %>")
+        say("- You Do Not Follow Them")
       end
       if (!skip)
         # prompts
@@ -48,7 +48,7 @@ class SoftPrune < MyCLIPart
           catch_twitter {
             #client.unblock(follower)
           }
-          say("<%= color('... SOFTBLOCKED!',:notice) %>")
+          say("... SOFTBLOCKED!")
         end
       end
     end

@@ -26,6 +26,7 @@ class FriendPruner < MyCLIPart
     end
 
     # go through them and show info and prompt
+    friends.shuffle!
     friends.each do |friend|
       @output.say("Loading next friend @#{friend}...")
       if (use_list)
@@ -35,20 +36,18 @@ class FriendPruner < MyCLIPart
         }
       end
       if (use_list && @in_list)
-        @output.say("<%= color('Hey cool, @#{friend} is in your list! Skipping!',:notice) %>")
+        @output.say("Hey cool, @#{friend} is in your list! Skipping!")
       else
         @this_friend = false;
         catch_twitter {
           @this_friend = @client.user(friend)
           sleep(3)
         }
-        @output.say("<%= color('-= #{@this_friend.name} =-', :red) %>")
-        @output.say("<%= color('-= #{@this_friend.uri} =-', :white) %>")
-        #FIXME regx breaking escaping idk it's weird try with apostrophe
-        #desc = "<%= color('-= #{@this_friend.description} =-', :blue) %>";
-        #@output.say(desc)
+        @output.say("-= #{@this_friend.name} =-")
+        @output.say("-= #{@this_friend.uri} =-")
+        @output.say("-= #{@this_friend.description} =-")
         if (@this_friend.website?)
-          @output.say("<%= color('#{@this_friend.website}', :green) %>")
+          @output.say("#{@this_friend.website}")
         end
 
         # last 20 tweets if not brief
@@ -66,9 +65,9 @@ class FriendPruner < MyCLIPart
           @is_follower = @client.friendship?(friend,profile)
         }
         if (@is_follower)
-          @output.say("<%= color('+ Follows You',:green) %>")
+          @output.say("+ Follows You")
         else
-          @output.say("<%= color('- Does Not Follow You',:red) %>")
+          @output.say("- Does Not Follow You")
         end
 
         # prompts
@@ -77,12 +76,12 @@ class FriendPruner < MyCLIPart
           catch_twitter {
             @client.unfollow(friend)
           }
-          @output.say("<%= color('... DONE!',:info) %>")
+          @output.say("... DONE!")
         else
-          @output.say("<%= color('... Skipped!',:yellow) %>")
+          @output.say("... Skipped!")
           if (use_list && agree("Add them to your list?"))
             @client.add_list_member(@options[:listname],friend)
-            @output.say("<%= color('... ADDED!',[:green, :bright]) %>")
+            @output.say("... ADDED!")
           end
         end
       end

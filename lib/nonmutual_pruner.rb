@@ -25,10 +25,10 @@ class NonmutualPruner < MyCLIPart
       }
       skip = false
       if (@is_follower)
-        say("<%= color('+ Follows Back', [:bold, :red]) %>")
+        say("+ Follows Back")
         skip = true
       else
-        say("<%= color('- Does Not Follow Back', [:bold, :green]) %>")
+        say("- Does Not Follow Back")
       end
       if (!skip)
         # prompts
@@ -45,7 +45,7 @@ class NonmutualPruner < MyCLIPart
           catch_twitter {
             @client.unfollow(friend)
           }
-          say("<%= color('... unfollowed!', :info) %>")
+          say("... unfollowed!")
         end
       end
     end
