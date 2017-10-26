@@ -42,7 +42,7 @@ class MyCLI < Thor
   ##
   # prunenonmutuals from nonmutual-pruner
   #
-  desc "prunenonmutuals PROFILE", "iterate through nonmutual followers and unfollow. supply --noprompt=true to skip confirmation on each."
+  desc "prunenonmutuals <profile>", "iterate through nonmutual followers and unfollow. supply --noprompt=true to skip confirmation on each."
   option :noprompt, :default => false
   def prunenonmutuals(profile)
     client = @@config.get_profile_client(profile)
@@ -52,7 +52,7 @@ class MyCLI < Thor
   ##
   # processfriends from friend-pruner
   #
-   desc "processfriends PROFILE", "iterate through all friends of PROFILE, give information about each, and give the option to unfollow. if --listname=LISTNAME is provided, members of provided list will be ignored in process, and you will be given the option to add those you choose not to unfollow to that list. if --brief=true is provided, less information lookups will be performed and less info per person shown (such as their last 20 tweets)."
+   desc "processfriends <profile>", "iterate through all friends of <profile>, give information about each, and give the option to unfollow. if --listname=<listname> is provided, members of provided list will be ignored in process, and you will be given the option to add those you choose not to unfollow to that list. if --brief=true is provided, less information lookups will be performed and less info per person shown (such as their last 20 tweets)."
   option :listname, :required => false
   option :brief,    :required => false
   def processfriends(profile)
@@ -82,7 +82,7 @@ class MyCLI < Thor
   ##
   # importlist from list_adder
   #
-  desc "importlist PROFILE FILE LISTNAME", "import list for PROFILE from txt file at PATH into LISTNNAME"
+  desc "importlist <profile> <file> <listname>", "import list for <profile> from txt file at PATH into LISTNNAME"
   def importlist(profile,path,listname)
     client = @@config.get_profile_client(profile)
     ListAdder.new(@@output,client,options).import(profile,path,listname)
@@ -91,7 +91,7 @@ class MyCLI < Thor
   ##
   # addtolist from list_adder
   #
-  desc "addtolist PROFILE LISTNAME MEMBER", "immediately add MEMBER (no @ symbol) to LISTNAME for PROFILE"
+  desc "addtolist <profile> <listname> <member>", "immediately add <member> (no @ symbol) to <listname> for <profile>"
   def addtolist(profile,listname,member)
     client = @@config.get_profile_client(profile)
     ListAdder.new(@@output,client,options).add(profile,listname,member)

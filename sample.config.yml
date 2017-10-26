@@ -1,9 +1,14 @@
 ---
 profiles:
-  username:
-    username: MyTwitterAccount
+  primaryaccount:
+    username: primaryaccount
     consumer_key: getme
     consumer_secret: getme
     token: getme
     secret: getme
-
+  secondaryaccount:
+    username: secondaryaccount
+    consumer_key: getme
+    consumer_secret: getme
+    token: getme
+    secret: getme
