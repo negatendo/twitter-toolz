@@ -37,5 +37,5 @@ $ ./dostuff csvdelete mytwitter ~/archive.csv
 + importlist - Import members captured in a .txt file (maybe other formats coming soon) to a list.
 + processfriends - Iterate randomly through each of your friends, show some information, and offer options for unfollowing, adding to lists, etc.
 + prunenonmutuals - Unfollow all nonmutual followers.
-+ softprune - Softblock (block then unblocks, thus making them unfollow you) all nonmutuals.
++ softprune - Softblock (block then unblocks, thus making them unfollow you) all nonmutuals (in this case, accounts that you don't follow back). Good for "securing" locked accounts.
 
