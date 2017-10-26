@@ -1,4 +1,4 @@
-# Twtter Toolz
+# Twitter Toolz
 
 Various handy Twitter API tools made in Ruby and to be run from the command line. See the "Run" section for a list of some commands.
 
