@@ -6,9 +6,9 @@ Various handy Twitter API tools made in Ruby and to be run from the command line
 
 Requires Ruby 2.3.0 or higher. Run bundler to install required gems.
 
-'''
+```
 $ bundle install
-'''
+```
 
 ## Configure
 
@@ -20,15 +20,15 @@ twitter-toolz support multiple Twitter profiles (accounts). Just add authorizati
 
 Run dostuff to see a list of commands:
 
-'''
+```
 $ ./dostuff
-'''
+```
 
 Then run your commands like so:
 
-'''
+```
 $ ./dostuff csvdelete mytwitter ~/archive.csv
-'''
+```
 
 ## List of Commands
 
