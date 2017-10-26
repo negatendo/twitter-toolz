@@ -82,7 +82,7 @@ class MyCLI < Thor
   ##
   # importlist from list_adder
   #
-  desc "importlist <profile> <file> <listname>", "import list for <profile> from txt file at PATH into LISTNNAME"
+  desc "importlist <profile> <file> <listname>", "import list for <profile> from txt file at <file> into <listname>"
   def importlist(profile,path,listname)
     client = @@config.get_profile_client(profile)
     ListAdder.new(@@output,client,options).import(profile,path,listname)
