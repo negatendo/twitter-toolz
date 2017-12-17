@@ -43,6 +43,7 @@ class MyCLI < Thor
   # prunenonmutuals from nonmutual-pruner
   #
   desc "prunenonmutuals <profile>", "iterate through nonmutual followers and unfollow. supply --noprompt=true to skip confirmation on each."
+  option :listname, :required => false
   option :noprompt, :default => false
   def prunenonmutuals(profile)
     client = @@config.get_profile_client(profile)

@@ -15,6 +15,16 @@ class NonmutualPruner < MyCLIPart
         end
       end
     }
+
+    # are we involving a list? if so, gather members
+    use_list = false
+    if (@options[:listname])
+      catch_twitter {
+        list = @client.list(@options[:listname])
+      }
+      use_list = true
+    end
+
     # go through them and if nonmutual then remove
     friends.each do |friend|
       @output.say("Loading next friend @#{friend}...")
@@ -30,6 +40,19 @@ class NonmutualPruner < MyCLIPart
       else
         say("- Does Not Follow Back")
       end
+
+      # skip if on list
+      if (use_list)
+        in_list = false;
+        catch_twitter {
+          in_list = @client.list_member?(@options[:listname],friend)
+        }
+        if (in_list)
+          say("+ A member of your list")
+          skip = true
+        end
+      end
+
       if (!skip)
         # prompts
         unfollow = false
