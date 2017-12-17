@@ -15,6 +15,16 @@ class SoftPrune < MyCLIPart
         end
       end
     }
+
+    # are we involving a list? if so, gather members
+    use_list = false
+    if (@options[:listname])
+      catch_twitter {
+        list = @client.list(@options[:listname])
+      }
+      use_list = true
+    end
+
     # go through them and if nonmutual then remove
     followers.each do |follower|
       say("Loading next follower @#{follower}...")
@@ -30,6 +40,18 @@ class SoftPrune < MyCLIPart
       else
         say("- You Do Not Follow Them")
       end
+      # skip if on list
+      if (use_list)
+        in_list = false;
+        catch_twitter {
+          in_list = @client.list_member?(@options[:listname],follower)
+        }
+        if (in_list)
+          say("+ A member of your list")
+          skip = true
+        end
+      end
+
       if (!skip)
         # prompts
         unfollow = false

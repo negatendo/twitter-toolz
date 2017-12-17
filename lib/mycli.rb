@@ -74,6 +74,7 @@ class MyCLI < Thor
     \x5-testrun=true to run the script without performing softblocks
   LONGDESC
   option :noprompt, :default => false
+  option :listname, :required => false
   option :testrun, :default => false
   def softprune(profile)
     client = @@config.get_profile_client(profile)
